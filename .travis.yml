@@ -3,22 +3,22 @@ sudo: required
 language: java
 jdk: oraclejdk8
 addons:
-    sonarqube:
-        organization: "viktorc-github"
-        token:
-            secure: $SONAR_TOKEN
+  sonarqube:
+    organization: "viktorc-github"
+    token:
+      secure: $SONAR_TOKEN
 install: true
 script: mvn clean install jacoco:report coveralls:report sonar:sonar
 cache:
-    directories:
-        - $HOME/.m2
-        - $HOME/.sonar/cache
+  directories:
+  - $HOME/.m2
+  - $HOME/.sonar/cache
 notifications:
-    email: false
+  email: false
 deploy:
-    provider: pages
-    local_dir: docs
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN
-    on:
-        branch: master
+  provider: pages
+  local_dir: docs
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master

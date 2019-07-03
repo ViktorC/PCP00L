@@ -20,75 +20,73 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import net.viktorc.pp4j.impl.SimpleCommand;
-import net.viktorc.pp4j.impl.SimpleSubmission;
-import net.viktorc.pp4j.impl.SimpleProcessExecutor;
-
 /**
  * Test cases for the {@link net.viktorc.pp4j.impl.SimpleProcessExecutor}.
- * 
- * @author Viktor
  *
+ * @author Viktor
  */
 public class SPETest {
 
-	@Rule
-	public final ExpectedException exceptionRule = ExpectedException.none();
-	
-	@Test
-	public void test01() throws Exception {
-		try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
-				TestUtils.createTestProcessManagerFactory().newProcessManager())) {
-			SimpleCommand command = new SimpleCommand("process 3",
-					(c, o) -> "ready".equals(o), (c, o) -> false);
-			executor.start();
-			executor.execute(new SimpleSubmission(command));
-			Assert.assertFalse(executor.stop(false));
-			Assert.assertTrue(executor.stop(true));
-			Assert.assertTrue(command.getJointStandardOutLines()
-					.contains("in progress\nin progress\nready"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	@Test
-	public void test02() throws Exception {
-		try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
-				TestUtils.createTestProcessManagerFactory().newProcessManager())) {
-			executor.start();
-			exceptionRule.expect(IllegalStateException.class);
-			executor.start();
-		}
-	}
-	@Test
-	public void test03() throws Exception {
-		try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
-				TestUtils.createTestProcessManagerFactory().newProcessManager())) {
-			Assert.assertFalse(executor.isRunning());
-			executor.start();
-			Assert.assertTrue(executor.isRunning());
-		}
-	}
-	@Test
-	public void test04() throws Exception {
-		Thread t = null;
-		try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
-				TestUtils.createTestProcessManagerFactory().newProcessManager())) {
-			t = new Thread(() -> {
-				try {
-					executor.join();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			});
-			executor.start();
-			t.start();
-			Assert.assertTrue(t.isAlive());
-			executor.stop(true);
-			executor.join();
-			Thread.sleep(20);
-			Assert.assertFalse(t.isAlive());
-		}
-	}
-	
+  @Rule
+  public final ExpectedException exceptionRule = ExpectedException.none();
+
+  @Test
+  public void test01() throws Exception {
+    try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
+        TestUtils.createTestProcessManagerFactory().newProcessManager())) {
+      SimpleCommand command = new SimpleCommand("process 3",
+          (c, o) -> "ready".equals(o), (c, o) -> false);
+      executor.start();
+      executor.execute(new SimpleSubmission(command));
+      Assert.assertFalse(executor.stop(false));
+      Assert.assertTrue(executor.stop(true));
+      Assert.assertTrue(command.getJointStandardOutLines()
+          .contains("in progress\nin progress\nready"));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void test02() throws Exception {
+    try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
+        TestUtils.createTestProcessManagerFactory().newProcessManager())) {
+      executor.start();
+      exceptionRule.expect(IllegalStateException.class);
+      executor.start();
+    }
+  }
+
+  @Test
+  public void test03() throws Exception {
+    try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
+        TestUtils.createTestProcessManagerFactory().newProcessManager())) {
+      Assert.assertFalse(executor.isRunning());
+      executor.start();
+      Assert.assertTrue(executor.isRunning());
+    }
+  }
+
+  @Test
+  public void test04() throws Exception {
+    Thread t = null;
+    try (SimpleProcessExecutor executor = new SimpleProcessExecutor(
+        TestUtils.createTestProcessManagerFactory().newProcessManager())) {
+      t = new Thread(() -> {
+        try {
+          executor.join();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      });
+      executor.start();
+      t.start();
+      Assert.assertTrue(t.isAlive());
+      executor.stop(true);
+      executor.join();
+      Thread.sleep(20);
+      Assert.assertFalse(t.isAlive());
+    }
+  }
+
 }

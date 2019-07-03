@@ -17,17 +17,16 @@ package net.viktorc.pp4j.impl;
 
 /**
  * A simple native code wrapper class for testing JNI performance.
- * 
- * @author Viktor Csomor
  *
+ * @author Viktor Csomor
  */
 public class WrapperJNI {
 
-	// Load the library.
-	static {
-		System.load(TestUtils.getLibrary().getAbsolutePath());
-	}
-	
-	public native void doStuff(int seconds);
-	
+  // Load the library.
+  static {
+    System.load(TestUtils.getLibrary().getAbsolutePath());
+  }
+
+  public native void doStuff(int seconds);
+
 }

@@ -16,24 +16,21 @@
 package net.viktorc.pp4j.api;
 
 /**
- * An interface that defines an executor that encapsulates a process and serves as a handle for having the process 
- * execute submissions.
- * 
- * @author Viktor Csomor
+ * An interface that defines an executor that encapsulates a process and serves as a handle for having the process execute submissions.
  *
+ * @author Viktor Csomor
  */
 public interface ProcessExecutor {
 
-	/**
-	 * Sequentially writes the specified commands to the process and blocks until they are processed. The result of 
-	 * the submission, if there is one, can be subsequently  accessed by calling the 
-	 * {@link net.viktorc.pp4j.api.Submission#getResult()} method.
-	 * 
-	 * @param submission The submission to execute.
-	 * @return Whether the submission was executed. If the executor is not running, busy processing an other 
-	 * submission, or stopped before it could complete the execution of the submission, <code>false</code> is returned; 
-	 * otherwise the submission is processed and <code>true</code> is returned once it's successfully executed.
-	 */
-	boolean execute(Submission<?> submission);
+  /**
+   * Sequentially writes the specified commands to the process and blocks until they are processed. The result of the submission, if there
+   * is one, can be subsequently  accessed by calling the {@link net.viktorc.pp4j.api.Submission#getResult()} method.
+   *
+   * @param submission The submission to execute.
+   * @return Whether the submission was executed. If the executor is not running, busy processing an other submission, or stopped before it
+   * could complete the execution of the submission, <code>false</code> is returned; otherwise the submission is processed and
+   * <code>true</code> is returned once it's successfully executed.
+   */
+  boolean execute(Submission<?> submission);
 
 }

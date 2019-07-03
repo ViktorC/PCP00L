@@ -20,57 +20,58 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
- * An interface for Java process pools that extends both the {@link net.viktorc.pp4j.api.ProcessExecutorService} 
- * and {@link java.util.concurrent.ExecutorService} interfaces.
- * 
- * @author Viktor Csomor
+ * An interface for Java process pools that extends both the {@link net.viktorc.pp4j.api.ProcessExecutorService} and {@link
+ * java.util.concurrent.ExecutorService} interfaces.
  *
+ * @author Viktor Csomor
  */
 public interface JavaProcessExecutorService extends ProcessExecutorService, ExecutorService {
-	
-	/**
-	 * See {@link #submit(Runnable)}.
-	 * 
-	 * @param task The task to execute.
-	 * @param terminateProcessAfterwards Whether the process is to be terminated after the execution of the 
-	 * task.
-	 * @return A <code>Future</code> instance to allow for waiting for the task to be executed or to cancel it.
-	 */
-	Future<?> submit(Runnable task, boolean terminateProcessAfterwards);
-	/**
-	 * See {@link #submit(Runnable, Object)}.
-	 * 
-	 * @param task The task to execute.
-	 * @param result The object representing the result of the operation.
-	 * @param terminateProcessAfterwards Whether the process is to be terminated after the execution of the 
-	 * task.
-	 * @param <T> The type of the result.
-	 * @return A <code>Future</code> instance to allow for waiting for the task to be executed, to cancel it, 
-	 * or to retrieve the value of the result of the operation.
-	 */
-	<T> Future<T> submit(Runnable task, T result, boolean terminateProcessAfterwards);
-	/**
-	 * See {@link #submit(Callable)}.
-	 * 
-	 * @param task The task to execute.
-	 * @param terminateProcessAfterwards Whether the process is to be terminated after the execution of the 
-	 * task.
-	 * @param <T> The type of the result.
-	 * @return A <code>Future</code> instance to allow for waiting for the task to be executed, to cancel it, 
-	 * or to retrieve the value of the result of the operation.
-	 */
-	<T> Future<T> submit(Callable<T> task, boolean terminateProcessAfterwards);
-	@Override
-	default Future<?> submit(Runnable task) {
-		return submit(task, false);
-	}
-	@Override
-	default <T> Future<T> submit(Runnable task, T result) {
-		return submit(task, result, false);
-	}
-	@Override
-	default <T> Future<T> submit(Callable<T> task) {
-		return submit(task, false);
-	}
-	
+
+  /**
+   * See {@link #submit(Runnable)}.
+   *
+   * @param task The task to execute.
+   * @param terminateProcessAfterwards Whether the process is to be terminated after the execution of the task.
+   * @return A <code>Future</code> instance to allow for waiting for the task to be executed or to cancel it.
+   */
+  Future<?> submit(Runnable task, boolean terminateProcessAfterwards);
+
+  /**
+   * See {@link #submit(Runnable, Object)}.
+   *
+   * @param task The task to execute.
+   * @param result The object representing the result of the operation.
+   * @param terminateProcessAfterwards Whether the process is to be terminated after the execution of the task.
+   * @param <T> The type of the result.
+   * @return A <code>Future</code> instance to allow for waiting for the task to be executed, to cancel it, or to retrieve the value of the
+   * result of the operation.
+   */
+  <T> Future<T> submit(Runnable task, T result, boolean terminateProcessAfterwards);
+
+  /**
+   * See {@link #submit(Callable)}.
+   *
+   * @param task The task to execute.
+   * @param terminateProcessAfterwards Whether the process is to be terminated after the execution of the task.
+   * @param <T> The type of the result.
+   * @return A <code>Future</code> instance to allow for waiting for the task to be executed, to cancel it, or to retrieve the value of the
+   * result of the operation.
+   */
+  <T> Future<T> submit(Callable<T> task, boolean terminateProcessAfterwards);
+
+  @Override
+  default Future<?> submit(Runnable task) {
+    return submit(task, false);
+  }
+
+  @Override
+  default <T> Future<T> submit(Runnable task, T result) {
+    return submit(task, result, false);
+  }
+
+  @Override
+  default <T> Future<T> submit(Callable<T> task) {
+    return submit(task, false);
+  }
+
 }
